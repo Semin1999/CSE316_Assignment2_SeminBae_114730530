@@ -1,32 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './sytle/0.Navbar.css'
-import homeIcon from '../resources/homeicon.png'
+import homeImage from '../resources/homeicon.png'
+import userImage from '../resources/user.png'
 
 const Navbar: React.FC = () => {
   return (
     <nav>
-      <ul>
-        <li>
+      <ul className='navBar'>
+        <li className='navLeft'>
           <Link to="/home">
           <img 
-              src={homeIcon} 
-              alt="Home Icon" 
+              src={homeImage} 
+              alt="HomeIcon" 
               style={{ width: '30px', height: '30px', cursor: 'pointer' }}
             />
           </Link>
         </li>
+        <div className='navCenter'>
         <li>
-          <Link to="/facilityList">Facility List</Link>
+            <Link to="/facilityList">Facility List</Link>
+          </li>
+          <li>
+            <Link to="/facilityReservation">Reservation</Link>
+          </li>
+          <li>
+          <Link to="">User ▼</Link>
         </li>
-        <li>
-          <Link to="/facilityReservation">Facility Reservation</Link>
-        </li>
-        <li>
-          <Link to="/myInformation">My Information</Link>
-        </li>
-        <li>
-          <Link to="/myReservation">My Reservation</Link>
+        </div>
+        <li className='navRight'>
+        <img 
+              src={userImage} 
+              alt="UserImage" 
+              style={{ width: '40px', height: '40px', cursor: 'pointer' }}
+            />
         </li>
       </ul>
     </nav>
