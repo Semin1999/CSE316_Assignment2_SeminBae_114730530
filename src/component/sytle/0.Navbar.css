@@ -39,3 +39,44 @@ nav ul li a:hover {
 .navLeft{
   padding-left:10px
 }
+
+.dropdownContent {
+  display: block;
+  position: absolute;
+  background-color: #ebebebce;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  top: 6.1%;
+}
+
+.dropdownContent li {
+  padding: 8px 16px;
+}
+
+.dropdownContent li a {
+  color: black;
+}
+
+@media(max-width: 800px){
+  .navCenter{
+    display: none;
+  }
+  #userIcon{
+    display: none;
+  }
+  #menuIcon{
+    display: block;
+  }
+}
+
+@media(min-width: 800px){
+  .navCenter{
+    display: flex;
+  }
+  #userIcon{
+    display: block;
+  }
+  #menuIcon{
+    display: none;
+  }
+}
