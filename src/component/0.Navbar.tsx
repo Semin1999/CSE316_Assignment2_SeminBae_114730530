@@ -1,43 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './sytle/0.Navbar.css'
 import homeImage from '../resources/homeicon.png'
 import userImage from '../resources/user.png'
+import menuImage from '../resources/menu.png'
 
 const Navbar: React.FC = () => {
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleUserClick = () => {
+    console.log('buttonclick');
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
+
   return (
     <nav>
-      <ul className='navBar'>
-        <li className='navLeft'>
+      <ul className="navBar">
+        {/* 왼쪽 섹션 */}
+        <li className="navLeft">
           <Link to="/home">
-          <img 
+            <img 
               src={homeImage} 
-              alt="HomeIcon" 
+              alt="Home Icon" 
               style={{ width: '30px', height: '30px', cursor: 'pointer' }}
             />
           </Link>
         </li>
-        <div className='navCenter'>
-        <li>
-            <Link to="/facilityList">Facility List</Link>
+
+        {/* 가운데 섹션 */}
+        <div className="navCenter">
+          <li>
+            <Link to="/facilityList" onClick={closeDropdown}>Facility List</Link>
           </li>
           <li>
-            <Link to="/facilityReservation">Reservation</Link>
+            <Link to="/facilityReservation" onClick={closeDropdown}>Reservation</Link>
           </li>
           <li>
-          <Link to="">User ▼</Link>
-        </li>
+            <a onClick={handleUserClick}>User ▼</a>
+            {isDropdownOpen && (
+              <ul className="dropdownContent">
+                <li>
+                  <Link to="/myInformation" onClick={closeDropdown}>My Information</Link>
+                </li>
+                <li>
+                  <Link to="/myReservation" onClick={closeDropdown}>My Reservation</Link>
+                </li>
+              </ul>    
+            )}
+          </li>
         </div>
-        <li className='navRight'>
-        <img 
-              src={userImage} 
-              alt="UserImage" 
-              style={{ width: '40px', height: '40px', cursor: 'pointer' }}
-            />
+
+        {/* 오른쪽 섹션 */}
+        <li className="navRight">
+          <img 
+            src={userImage} 
+            alt="User Icon"
+            id='userIcon' 
+            onClick={closeDropdown}
+            style={{ width: '40px', height: '40px', cursor: 'pointer' }}
+          />
+          <img 
+            src={menuImage} 
+            alt="menu Icon"
+            id='menuIcon'
+            style={{ width: '35px', height: '35px', cursor: 'pointer' }}
+          />
         </li>
       </ul>
     </nav>
   );
 };
+
 
 export default Navbar;
