@@ -6,22 +6,31 @@ import userImage from '../resources/user.png'
 import menuImage from '../resources/menu.png'
 
 const Navbar: React.FC = () => {
+  // Separate state variables for clarity
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Main 'User' dropdown
+  const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false); // Hamburger menu
+  const [isHamburgerUserDropdownOpen, setIsHamburgerUserDropdownOpen] = useState(false); // 'User' dropdown in hamburger menu
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isHambugerDropdownOpen, setIsHambugerDropdownOpen] = useState(false);
-
+  // Toggle functions
   const handleUserClick = () => {
-    console.log('buttonclick');
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const closeDropdown = () => {
     setIsDropdownOpen(false);
+    setIsHamburgerMenuOpen(false);
+    setIsHamburgerUserDropdownOpen(false);
   };
 
-  const handleHambugerUserClick = () => {
-    console.log('buttonclick');
-    setIsHambugerDropdownOpen(!isHambugerDropdownOpen);
+  const handleHamburgerMenuClick = () => {
+    setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
+    // Close other dropdowns
+    setIsDropdownOpen(false);
+    setIsHamburgerUserDropdownOpen(false);
+  };
+
+  const handleHamburgerUserClick = () => {
+    setIsHamburgerUserDropdownOpen(!isHamburgerUserDropdownOpen);
   };
 
   return (
@@ -29,7 +38,7 @@ const Navbar: React.FC = () => {
       <ul className="navBar">
         {/* 왼쪽 섹션 */}
         <li className="navLeft">
-          <Link to="/home">
+          <Link to="/home" onClick={closeDropdown}>
             <img 
               src={homeImage} 
               alt="Home Icon" 
@@ -74,17 +83,23 @@ const Navbar: React.FC = () => {
             src={menuImage} 
             alt="menu Icon"
             id='menuIcon'
-            onClick={handleHambugerUserClick}
+            onClick={handleHamburgerMenuClick}
             style={{ width: '35px', height: '35px', cursor: 'pointer' }}
           />
         </li>
       </ul>
 
-      {isHambugerDropdownOpen && (
+      {isHamburgerMenuOpen && (
       <ul className='hiddenNav'>
-        <Link to="/facilityList"> <li>Facility List</li></Link>
-        <Link to="/facilityReservation"><li>Facility Reservation</li></Link>
-        <li onClick={handleUserClick}>User ▼</li>
+        <Link to="/facilityList" onClick={closeDropdown}> <li>Facilidty List</li></Link>
+        <Link to="/facilityReservation" onClick={closeDropdown}><li>Facility Reservation</li></Link>
+        <li onClick={handleHamburgerUserClick}>User ▼</li>
+        {isHamburgerUserDropdownOpen && (
+        <ul className="hiddendropdownContent">
+          <Link to="/myInformation" onClick={closeDropdown}><li>My Information</li></Link>
+          <Link to="/myReservation" onClick={closeDropdown}><li>My Reservation</li></Link>
+        </ul>    
+      )}
       </ul>
       )}
     </nav>

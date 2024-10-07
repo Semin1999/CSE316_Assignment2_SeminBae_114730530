@@ -21,26 +21,37 @@ nav ul {
   padding: 2px;
   width: 80%;
   margin: auto;
-  min-width: 500px;
-  min-height: 45px;
   display: block;
-  border-width: 1;
-  border-color: #333;
-}
-
-.hiddenNav li{
-  font-size: 13px;
-  text-align: center;
+  min-width: 500px;
 }
 
 nav ul li a {
   color: white;
   text-decoration: none;
   font-size: 13px;
+  text-underline-offset: none;
 }
   
 nav ul li a:hover {
   color: #f0a500;
+}
+
+.hiddenNav li{
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: white;
+  min-height: 22px;
+  padding: 8px 16px;
+}
+
+.hiddenNav a {
+  text-decoration: none;
+}
+
+.hiddenNav li:hover{
+  background-color: rgb(227, 212, 255);
+  color:black
 }
 
 .navRight{
@@ -75,7 +86,14 @@ nav ul li a:hover {
   color: black;
 }
 
-@media(max-width: 800px){
+.hiddendropdownContent {
+  margin: auto;
+  display: block;
+  background-color: #c9c9c9ce;
+}
+
+
+@media(max-width: 600px){
   .navCenter{
     display: none;
   }
@@ -88,7 +106,7 @@ nav ul li a:hover {
 
 }
 
-@media(min-width: 800px){
+@media(min-width: 600px){
   .navCenter{
     display: flex;
   }
