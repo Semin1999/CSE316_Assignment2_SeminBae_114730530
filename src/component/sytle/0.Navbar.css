@@ -1,9 +1,10 @@
-nav {
+.navBar {
   background-color: #333;
   padding: 2px;
   width: 80%;
   margin: auto;
   min-width: 500px;
+  min-height: 45px;
 }
 
 nav ul {
@@ -14,7 +15,24 @@ nav ul {
   margin: 3px 3px 3px 3px;
   padding: 0;
 }
-  
+
+.hiddenNav{
+  background-color: grey;
+  padding: 2px;
+  width: 80%;
+  margin: auto;
+  min-width: 500px;
+  min-height: 45px;
+  display: block;
+  border-width: 1;
+  border-color: #333;
+}
+
+.hiddenNav li{
+  font-size: 13px;
+  text-align: center;
+}
+
 nav ul li a {
   color: white;
   text-decoration: none;
@@ -67,6 +85,7 @@ nav ul li a:hover {
   #menuIcon{
     display: block;
   }
+
 }
 
 @media(min-width: 800px){
@@ -77,6 +96,9 @@ nav ul li a:hover {
     display: block;
   }
   #menuIcon{
+    display: none;
+  }
+  .hiddenNav{
     display: none;
   }
 }
