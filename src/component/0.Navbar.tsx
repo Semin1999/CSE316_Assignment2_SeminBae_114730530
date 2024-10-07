@@ -8,6 +8,7 @@ import menuImage from '../resources/menu.png'
 const Navbar: React.FC = () => {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isHambugerDropdownOpen, setIsHambugerDropdownOpen] = useState(false);
 
   const handleUserClick = () => {
     console.log('buttonclick');
@@ -16,6 +17,11 @@ const Navbar: React.FC = () => {
 
   const closeDropdown = () => {
     setIsDropdownOpen(false);
+  };
+
+  const handleHambugerUserClick = () => {
+    console.log('buttonclick');
+    setIsHambugerDropdownOpen(!isHambugerDropdownOpen);
   };
 
   return (
@@ -68,10 +74,19 @@ const Navbar: React.FC = () => {
             src={menuImage} 
             alt="menu Icon"
             id='menuIcon'
+            onClick={handleHambugerUserClick}
             style={{ width: '35px', height: '35px', cursor: 'pointer' }}
           />
         </li>
       </ul>
+
+      {isHambugerDropdownOpen && (
+      <ul className='hiddenNav'>
+        <Link to="/facilityList"> <li>Facility List</li></Link>
+        <Link to="/facilityReservation"><li>Facility Reservation</li></Link>
+        <li onClick={handleUserClick}>User ▼</li>
+      </ul>
+      )}
     </nav>
   );
 };
