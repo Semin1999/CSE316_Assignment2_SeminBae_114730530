@@ -1,0 +1,14 @@
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.col-md-6{
+    padding: 1%;
+}
+
+.card-img-top{
+    max-width: 95%;
+    padding: auto;
+    margin: auto;
+    margin-top: 10px;
+}

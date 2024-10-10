@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './sytle/0.Navbar.css'
-import homeImage from '../resources/homeicon.png'
-import userImage from '../resources/user.png'
-import menuImage from '../resources/menu.png'
+import homeImage from '../../public/resources/homeicon.png'
+import userImage from '../../public/resources/user.png'
+import menuImage from '../../public/resources/menu.png'
 
 const Navbar: React.FC = () => {
   // Separate state variables for clarity

@@ -97,7 +97,7 @@ nav ul li a:hover {
 }
 
 
-@media(max-width: 600px){
+@media(max-width: 770px){
   .navCenter{
     display: none;
   }
@@ -110,7 +110,7 @@ nav ul li a:hover {
 
 }
 
-@media(min-width: 600px){
+@media(min-width: 770px){
   .navCenter{
     display: flex;
   }
