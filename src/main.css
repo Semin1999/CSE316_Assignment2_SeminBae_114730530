@@ -9,7 +9,7 @@ html, body {
 }
 
 .mainBody {
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     background-color: #f1e9ff;
   }
