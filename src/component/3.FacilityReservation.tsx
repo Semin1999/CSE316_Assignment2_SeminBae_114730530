@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { facilityData }from './2.FacilityList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './sytle/3.FacilityReservation.css'
@@ -37,6 +37,13 @@ const FacilityReservation: React.FC = () => {
     setPurpose(event.target.value);
   };
 
+  useEffect(() => {
+    // 기본으로 선택된 시설의 이름을 설정하고 그에 따른 정보를 표시
+    if (!selectedFacility && facilityData.length > 0) {
+      setSelectedFacility(facilityData[0].name);
+    }
+  }, []);
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -62,11 +69,14 @@ const FacilityReservation: React.FC = () => {
       return;
     }
 
-    // 5. SUNY Korea 검증: Non-SUNY Korea 선택 시 예약 불가
-    if (isSUNYKorea !== 'SUNY Korea') {
-      alert('Only SUNY Korea students can make a reservation.');
-      return;
+    if(selectedFacilityData.available == "Only for SUNY Korea"){
+      // 5. SUNY Korea 검증: Non-SUNY Korea 선택 시 예약 불가
+      if (isSUNYKorea !== 'SUNY Korea') {
+        alert('Only SUNY Korea students can make a reservation.');
+        return;
+      }
     }
+
 
     // 6. 같은 날짜에 다른 예약이 있는지 검증
     const existingReservations = JSON.parse(localStorage.getItem('reservations') || '[]');
@@ -80,13 +90,16 @@ const FacilityReservation: React.FC = () => {
     }
 
     // 8. 모든 조건이 만족될 때 예약 정보를 저장
+    // 고유한 ID를 생성하여 예약 정보에 추가
     const newReservation = {
+      id: Date.now().toString(), // 고유한 ID 생성 (타임스탬프 사용)
       facility: selectedFacility,
       date,
       numPeople,
       isSUNYKorea,
       purpose,
     };
+
 
     const updatedReservations = [...existingReservations, newReservation];
     localStorage.setItem('reservations', JSON.stringify(updatedReservations));
@@ -103,7 +116,7 @@ const FacilityReservation: React.FC = () => {
           className="form-select"
           onChange={handleSelectChange}
           value={selectedFacility || ''}
-          style={{ width: '90%', margin: 'auto' }}
+          style={{ width: '95%', margin: 'auto' }}
         >
           {facilityData.map((facility) => (
             <option key={facility.name} value={facility.name}>
@@ -116,20 +129,20 @@ const FacilityReservation: React.FC = () => {
       {selectedFacilityData && (
         <div
           className="card mb-4"
-          style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', padding: '16px', width: '90%', margin: 'auto' }}
+          style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', padding: '16px', width: '95%', margin: 'auto' }}
         >
           <img
+            className='top-image'
             src={`../resources/${selectedFacilityData.name.toLowerCase().replace(' ', '')}.jpg`}
             alt={selectedFacilityData.name}
-            style={{ width: '200px', marginRight: '16px' }}
           />
           <ul className="list-unstyled">
-            <h5 className="card-title">{selectedFacilityData.name}</h5>
+            <h3 className="card-title">{selectedFacilityData.name}</h3>
             <p className="card-text">{selectedFacilityData.desc}</p>
-            <li>{selectedFacilityData.days}</li>
-            <li>{selectedFacilityData.participants}</li>
-            <li>{selectedFacilityData.location}</li>
-            <li>{selectedFacilityData.available}</li>
+            <li><img src = {'../resources/calander.png'} style={{ width: '20px', height: '20px'}} /> {selectedFacilityData.days}</li>
+            <li><img src = {'../resources/locate.png'} style={{ width: '20px', height: '20px'}} /> {selectedFacilityData.location}</li>
+            <li><img src = {'../resources/twoPeople.png'} style={{ width: '20px', height: '20px'}} /> {selectedFacilityData.participants}</li>
+            <li><img src = {'../resources/mencheck.png'} style={{ width: '20px', height: '20px'}} /> {selectedFacilityData.available}</li>
           </ul>
         </div>
       )}
