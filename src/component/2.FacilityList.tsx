@@ -11,7 +11,7 @@ interface Facility {
   available: string;
 }
 
-const facilityData: Facility[] = [
+export const facilityData: Facility[] = [
   {
     name: 'Gym',
     desc: 'A place used for physical activity',
