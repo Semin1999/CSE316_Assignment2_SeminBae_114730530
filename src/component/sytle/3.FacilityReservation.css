@@ -1,0 +1,12 @@
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.top-image{
+    max-width: 60%;
+    min-height: 200px;
+}
+
+.list-unstyled{
+    margin-left: 1%;
+}
