@@ -1,7 +1,7 @@
-
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
+import './sytle/4.MyInformation.css';
 
 const UserProfile: React.FC = () => {
   const [showImageModal, setShowImageModal] = useState(false);
@@ -26,26 +26,31 @@ const UserProfile: React.FC = () => {
   return (
     <div className="container mt-4" style={{ backgroundColor: '#f1e9ff', padding: '20px', borderRadius: '8px' }}>
       <h2 className="text-center">User Information</h2>
+      
       <div className="text-center">
         <img
-          src="../resources/user_placeholder.png" // 기본 사용자 이미지
+          src="../resources/user.png"
           alt="User"
-          style={{ width: '100px', height: '100px', borderRadius: '50%', marginBottom: '10px' }}
+          style={{ width: '150px', height: '150px', borderRadius: '50%', marginBottom: '10px' }}
         />
-        <Button variant="outline-primary" onClick={() => setShowImageModal(true)}>
+        <br></br>
+        <Button variant="outline-primary" onClick={() => setShowImageModal(true)} className="mt-2">
           Change Image
         </Button>
       </div>
-      <p>Email: abc@stonybrook.edu</p>
-      <div>
+      <br></br>
+      <p className="text-center">Email: abc@stonybrook.edu</p>
+
+      <div className="text-center">
         <p>Password: ******</p>
-        <Button variant="outline-primary" onClick={() => setShowPasswordModal(true)}>
+        <Button variant="outline-primary" onClick={() => setShowPasswordModal(true)} className="mt-2">
           Change Password
         </Button>
       </div>
-      <div className="mt-3">
-        <p>Name: John Doe</p>
-        <Button variant="outline-primary" onClick={() => setShowNameModal(true)}>
+
+      <div className="text-center mt-3">
+        <p>Name: Semin Bae</p>
+        <Button variant="outline-primary" onClick={() => setShowNameModal(true)} className="mt-2">
           Change Name
         </Button>
       </div>
@@ -56,7 +61,7 @@ const UserProfile: React.FC = () => {
           <Modal.Title>Change your image</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input type="file" className="form-control" />
+          <input type="file" className="form-control" accept='image/png, image/jpeg, image/jpg'/>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowImageModal(false)}>
