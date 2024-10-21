@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
           <li>
             <Link to="/facilityReservation" onClick={closeDropdown}>Reservation</Link>
           </li>
-          <li>
+          <li id = 'navUser' >
             <a onClick={handleUserClick}>User ▼</a>
             {isDropdownOpen && (
               <ul className="dropdownContent">
