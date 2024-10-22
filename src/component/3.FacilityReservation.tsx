@@ -37,14 +37,6 @@ const FacilityReservation: React.FC = () => {
     setPurpose(event.target.value);
   };
 
-  function computeWeekFromDate(q: number, m: number, k: number, j: number){
-    // - d is 0 through 6 representing Saturday (0), Sunday (1)… through Friday (6)
-    // - q is the day of the month (1-31)
-    // - m is the month (3: March, 4: April, …, 12: December, 13: January, 14: February)
-    // - j is the century (the first two digits of the year)
-    // - k is the year of the century (last two digits of the year)
-    return (q + 13*(m+1)/5 + k + (k/4) + (j/4) + 5*j) % 7;
-  }
 
   useEffect(() => {
     // 기본으로 선택된 시설의 이름을 설정하고 그에 따른 정보를 표시
@@ -98,9 +90,58 @@ const FacilityReservation: React.FC = () => {
       return;
     }
 
-    // 7. 해당 요일이 아니면 불가
-    const listDate = selectedFacilityData.days;
-    console.log(listDate);
+    function computeWeekFromDate(q: number, m: number, y: number): number {
+      console.log("day, month, year", q, m, y);
+    
+      if (m === 1) {
+        m = 13;
+        y--; // 1월은 전년도 13월로
+      } else if (m === 2) {
+        m = 14;
+        y--; // 2월은 전년도 14월로
+      }
+    
+      const k = y % 100; // 년도의 마지막 두 자리
+      const j = Math.floor(y / 100); // 세기
+    
+      // Zeller's Congruence 공식 적용
+      return (q + Math.floor(13 * (m + 1) / 5) + k + Math.floor(k / 4) + Math.floor(j / 4) - 2 * j) % 7;
+    }
+    
+    function convertDaysToNumbers(daysString: string): number[] {
+      const daysArray = daysString.split(', ').map(day => day.trim());
+    
+      const dayToNumberMap: { [key: string]: number } = {
+        'Sun': 1,
+        'Mon': 2,
+        'Tue': 3,
+        'Wed': 4,
+        'Thu': 5,
+        'Fri': 6,
+        'Sat': 0,
+      };
+    
+      return daysArray.map(day => dayToNumberMap[day]);
+    }
+    
+    const listDate: number[] = convertDaysToNumbers(selectedFacilityData.days);
+    
+    listDate.forEach(element => {
+      console.log("##", element);
+    });
+    
+    // `getDay()`는 요일을 반환하므로, `getDate()`로 변경하여 날짜를 계산
+    const selectedDayOfWeek = computeWeekFromDate(
+      selectedDate.getDate(), // 날짜 (일)
+      selectedDate.getMonth() + 1, // 월 (0부터 시작하므로 +1)
+      selectedDate.getFullYear() // 연도
+    );
+    
+    if (!listDate.includes(selectedDayOfWeek)) {
+      alert('You selected an unavailable day of the week');
+      return;
+    }
+    
 
     // 8. 모든 조건이 만족될 때 예약 정보를 저장
     // 고유한 ID를 생성하여 예약 정보에 추가
