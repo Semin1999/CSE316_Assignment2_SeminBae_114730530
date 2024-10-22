@@ -1,11 +1,19 @@
+/* Name: Semin Bae (114730530) */
+/* E-mail: semin.bae@stonybrook.edu */
+
+/* Here is the Styling for FacilityList */
+
+/* Basic font styling */
 *{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+/* adjust the padding col-md-6 which uses from bootstrap */
 .col-md-6{
     padding: 1%;
 }
 
+/* change image card styling */
 .card-img-top{
     max-width: 95%;
     padding: auto;

@@ -1,7 +1,14 @@
+/* Name: Semin Bae (114730530) */
+/* E-mail: semin.bae@stonybrook.edu */
+
+/* Here is the Styling for My Resrvation */
+
+/* Basic font styling */
 *{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+/* styling for the facility image */
 .top-image{
     max-width: 50%;
 }

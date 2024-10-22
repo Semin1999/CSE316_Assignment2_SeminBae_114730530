@@ -1,7 +1,14 @@
+/* Name: Semin Bae (114730530) */
+/* E-mail: semin.bae@stonybrook.edu */
+
+/* Here is the Styling for NavBar */
+
+/* Basic font styling */
 *{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+/* Get Navigation bar's styling (color, margin, etc...) */
 .navBar {
   background-color: #333;
   padding: 2px;
@@ -11,6 +18,7 @@
   min-height: 45px;
 }
 
+/* un-ordered list styling */
 nav ul {
   list-style: none;
   display: flex;
@@ -20,6 +28,7 @@ nav ul {
   padding: 0;
 }
 
+/* Hidden Navigation bar (Hambuger) styling */
 .hiddenNav{
   background-color: grey;
   padding: 2px;
@@ -29,17 +38,20 @@ nav ul {
   min-width: 500px;
 }
 
+/* Link area text styling in NavBar */
 nav ul li a {
   color: white;
   text-decoration: none;
   font-size: 13px;
   text-underline-offset: none;
 }
-  
+
+/* When if mouse over, the color change */
 nav ul li a:hover {
   color: #f0a500;
 }
 
+/* Hambuger list item styling */
 .hiddenNav li{
   display: flex;
   align-items: center;
@@ -49,19 +61,18 @@ nav ul li a:hover {
   padding: 8px 16px;
 }
 
+/* remove the basic styling in Hidden nav bar click area */
 .hiddenNav a {
   text-decoration: none;
 }
 
+/* styling when if mouse over on Hidden Nav bar */
 .hiddenNav li:hover{
   background-color: #e3d3ff;
   color: black;
 }
 
-.navRight{
-  padding-right: 10px;
-}
-
+/* The middle 3 list item in Nav bar styling */
 .navCenter{
   gap: 5%;
   display: flex;
@@ -69,10 +80,16 @@ nav ul li a:hover {
   flex-grow: 1;  
 }
 
+/* The right and left element havs independent padding */
+.navRight{
+  padding-right: 10px;
+}
+
 .navLeft{
   padding-left:10px
 }
 
+/* styling Dropdown in User */
 .dropdownContent {
   display: block;
   position: absolute;
@@ -82,20 +99,24 @@ nav ul li a:hover {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
+/* styling dropdown list items */
 .dropdownContent li {
   padding: 8px 16px;
 }
 
+/* Styling the list item click area in dropdown content */
 .dropdownContent li a {
   color: black;
 }
 
+/* Styling for the hidden dropdown content (use when if the small size web-browser) */
 .hiddendropdownContent {
   margin: auto;
   display: block;
   background-color: #c9c9c9ce;
 }
 
+/* Styling for user text (when I use with bootstrap, the user part not have styling, So I do style with ID selector*/
 #navUser{
   color: white;
 }
@@ -104,7 +125,7 @@ nav ul li a:hover {
   color: orange;
 }
 
-
+/* If the screen size < 770 then Center and user Icon will disappear, and menuIcon will appear */
 @media(max-width: 770px){
   .navCenter{
     display: none;
@@ -118,6 +139,7 @@ nav ul li a:hover {
 
 }
 
+/* upside-down with above */
 @media(min-width: 770px){
   .navCenter{
     display: flex;

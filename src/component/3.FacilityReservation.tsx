@@ -1,85 +1,99 @@
+/*
+  Name: Semin Bae (114730530)
+  E-mail: semin.bae@stonybrook.edu
+*/
+// Use React and useState hook to define state variables
 import React, { useState, useEffect } from 'react';
+// Use the Initalized facility list data
 import { facilityData }from './2.FacilityList';
+// Use Bootstrap styling library
 import 'bootstrap/dist/css/bootstrap.min.css';
+// Use CSS Styling
 import './sytle/3.FacilityReservation.css'
 
 const FacilityReservation: React.FC = () => {
 
-    const [date, setDate] = useState<string>('');
-    const [numPeople, setNumPeople] = useState<number>(1);
-    const [isSUNYKorea, setIsSUNYKorea] = useState<string>('Non-SUNY Korea');
-    const [purpose, setPurpose] = useState<string>('');
-    const [selectedFacility, setSelectedFacility] = useState<string | null>(null);
+  // State hooks and initalize to manage form inputs (and given some initial assigned values)
+  const [date, setDate] = useState<string>('');
+  const [numPeople, setNumPeople] = useState<number>(1);
+  const [isSUNYKorea, setIsSUNYKorea] = useState<string>('Non-SUNY Korea');
+  const [purpose, setPurpose] = useState<string>('');
+  const [selectedFacility, setSelectedFacility] = useState<string | null>(null);
 
-    // 드롭다운에서 선택된 시설을 처리하는 함수
+  // Handle changes to the facility dropdown
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedFacility(event.target.value);
   };
   
-  // 선택된 시설의 상세 정보를 가져오는 함수
+  // Get the selected facility's details from the data array
   const selectedFacilityData = facilityData.find(
     (facility) => facility.name === selectedFacility
   );
 
+  // Handle changes to the date input
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDate(event.target.value);
   };
 
+  // Handle changes to the number of people input
   const handleNumPeopleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNumPeople(Number(event.target.value));
   };
 
+  // Handle changes to the SUNY Korea affiliation radio buttons
   const handleSUNYChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsSUNYKorea(event.target.value);
   };
 
+  // Handle changes to the purpose textarea
   const handlePurposeChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPurpose(event.target.value);
   };
 
-
+  // Effect to set default facility if none is selected
   useEffect(() => {
-    // 기본으로 선택된 시설의 이름을 설정하고 그에 따른 정보를 표시
     if (!selectedFacility && facilityData.length > 0) {
       setSelectedFacility(facilityData[0].name);
     }
   }, []);
 
+  // Handle form submission and validation (check all the condition are valid)
   const handleSubmit = (event: React.FormEvent) => {
+    // check whether all the conditional fields are filled
     event.preventDefault();
 
+    // Condition 1: If there no selection of Facility
     if (!selectedFacilityData) {
       alert('Please select a facility.');
       return;
     }
 
-    // 3. 날짜 검증: 오늘 날짜보다 이전일 경우 예약 불가
+    // Condition 2: If the selected Date is previous than today
     const selectedDate = new Date(date);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 설정하여 날짜만 비교
+    today.setHours(0, 0, 0, 0);
 
     if (selectedDate < today) {
       alert('The selected date must be today or later.');
       return;
     }
 
-    // 4. 인원 검증: 인원 범위를 벗어난 경우 예약 불가
+    // Condition 3: If the number of people is not range of the Facility
     const [minParticipants, maxParticipants] = selectedFacilityData.participants.split(' - ').map(Number);
     if (numPeople < minParticipants || numPeople > maxParticipants) {
       alert(`Number of people must be between ${minParticipants} and ${maxParticipants}.`);
       return;
     }
 
+    // Condition 4: If the Facility is only for suny korea, then only suny korea student can reserve
     if(selectedFacilityData.available == "Only for SUNY Korea"){
-      // 5. SUNY Korea 검증: Non-SUNY Korea 선택 시 예약 불가
       if (isSUNYKorea !== 'SUNY Korea') {
         alert('Only SUNY Korea students can make a reservation.');
         return;
       }
     }
 
-
-    // 6. 같은 날짜에 다른 예약이 있는지 검증
+    // Condition 5: If the Facility reservation already exists for the selected date
     const existingReservations = JSON.parse(localStorage.getItem('reservations') || '[]');
     const isDateAlreadyBooked = existingReservations.some(
       (reservation: any) => reservation.date === date && reservation.facility === selectedFacility
@@ -90,24 +104,27 @@ const FacilityReservation: React.FC = () => {
       return;
     }
 
+    // Condition 6: If it is not available days of week
+    // Get computer week from date to use what instruction given
     function computeWeekFromDate(q: number, m: number, y: number): number {
       console.log("day, month, year", q, m, y);
     
       if (m === 1) {
         m = 13;
-        y--; // 1월은 전년도 13월로
+        y--;
       } else if (m === 2) {
         m = 14;
-        y--; // 2월은 전년도 14월로
+        y--;
       }
     
-      const k = y % 100; // 년도의 마지막 두 자리
-      const j = Math.floor(y / 100); // 세기
+      const k = y % 100; // get first 2 number from year
+      const j = Math.floor(y / 100); // last 2 number from year
     
-      // Zeller's Congruence 공식 적용
+      // Zeller's Congruence
       return (q + Math.floor(13 * (m + 1) / 5) + k + Math.floor(k / 4) + Math.floor(j / 4) - 2 * j) % 7;
     }
     
+    // Convert days to number to use map
     function convertDaysToNumbers(daysString: string): number[] {
       const daysArray = daysString.split(', ').map(day => day.trim());
     
@@ -124,17 +141,14 @@ const FacilityReservation: React.FC = () => {
       return daysArray.map(day => dayToNumberMap[day]);
     }
     
+    // Convert available days to numbers and check against selected day of the week
     const listDate: number[] = convertDaysToNumbers(selectedFacilityData.days);
     
-    listDate.forEach(element => {
-      console.log("##", element);
-    });
-    
-    // `getDay()`는 요일을 반환하므로, `getDate()`로 변경하여 날짜를 계산
+    // Get the day of the week from the selected date
     const selectedDayOfWeek = computeWeekFromDate(
-      selectedDate.getDate(), // 날짜 (일)
-      selectedDate.getMonth() + 1, // 월 (0부터 시작하므로 +1)
-      selectedDate.getFullYear() // 연도
+      selectedDate.getDate(),
+      selectedDate.getMonth() + 1,
+      selectedDate.getFullYear()
     );
     
     if (!listDate.includes(selectedDayOfWeek)) {
@@ -143,10 +157,10 @@ const FacilityReservation: React.FC = () => {
     }
     
 
-    // 8. 모든 조건이 만족될 때 예약 정보를 저장
-    // 고유한 ID를 생성하여 예약 정보에 추가
+    // All the conditions are fullfilled, then you can reserve
+    // Assigned ID for each reservation to distinguish which can use delete reservation
     const newReservation = {
-      id: Date.now().toString(), // 고유한 ID 생성 (타임스탬프 사용)
+      id: Date.now().toString(), // Make the ID to use Date.now() with string
       facility: selectedFacility,
       date,
       numPeople,
@@ -154,17 +168,17 @@ const FacilityReservation: React.FC = () => {
       purpose,
     };
 
-
+    // Save reservation in local storage with Json.stringfy data
     const updatedReservations = [...existingReservations, newReservation];
     localStorage.setItem('reservations', JSON.stringify(updatedReservations));
 
+    // All the reservation has been success, then alert successful
     alert('Reservation successful!');
-    console.log(newReservation);
   };
 
   return (
     <div className="container mt-4">
-      {/* 드롭다운 메뉴 */}
+      {/* Facility dropdown menu */}
       <div className="mb-4">
         <select
           className="form-select"
@@ -172,6 +186,7 @@ const FacilityReservation: React.FC = () => {
           value={selectedFacility || ''}
           style={{ width: '95%', margin: 'auto' }}
         >
+          {/* Assign the Facility names from facility List data */}
           {facilityData.map((facility) => (
             <option key={facility.name} value={facility.name}>
               {facility.name}
@@ -179,7 +194,8 @@ const FacilityReservation: React.FC = () => {
           ))}
         </select>
       </div>
-
+      
+      {/* Display Facility information and image with selected Facility */}
       {selectedFacilityData && (
         <div
           className="card mb-4"
@@ -201,6 +217,7 @@ const FacilityReservation: React.FC = () => {
         </div>
       )}
 
+      {/* Date input area */}
       <form onSubmit={handleSubmit} className="p-4" style={{ backgroundColor: '#f1e9ff' }}>
         <div className="mb-3">
           <label htmlFor="date" className="form-label">Date to be Used:</label>
@@ -214,6 +231,7 @@ const FacilityReservation: React.FC = () => {
           />
         </div>
 
+        {/* input number of people area */}
         <div className="mb-3">
           <label htmlFor="numPeople" className="form-label">Number of People:</label>
           <input
@@ -227,6 +245,7 @@ const FacilityReservation: React.FC = () => {
           />
         </div>
 
+        {/* input Affiliation of SUNY Korea area */}
         <div className="mb-3">
           <label className="form-label">Affiliation:</label>
           <div>
@@ -239,7 +258,8 @@ const FacilityReservation: React.FC = () => {
               onChange={handleSUNYChange}
             />
             <label htmlFor="sunyKorea" className="ms-2">SUNY Korea</label>
-            
+
+           {/* input Affiliation of Non SUNY Korea area */}
             <input
               type="radio"
               id="nonSUNYKorea"
@@ -253,6 +273,7 @@ const FacilityReservation: React.FC = () => {
           </div>
         </div>
 
+        {/* input Text for purpose of use area */}
         <div className="mb-3">
           <label htmlFor="purpose" className="form-label">Purpose of Use:</label>
           <textarea
@@ -265,13 +286,11 @@ const FacilityReservation: React.FC = () => {
           />
         </div>
 
+        {/* Submit button assigned */}
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     </div>
   );
 };
-
-
-  
 
 export default FacilityReservation;

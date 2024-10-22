@@ -1,34 +1,42 @@
+/*
+  Name: Semin Bae (114730530)
+  E-mail: semin.bae@stonybrook.edu
+*/
+// Use React and useState hook to define state variables
 import React, { useState } from 'react';
+// Use Link from react-router-dom to navigate between pages
 import { Link } from 'react-router-dom';
+// Import CSS for styling the navigation bar
 import './sytle/0.Navbar.css'
-import homeImage from '../../public/resources/homeicon.png'
-import userImage from '../../public/resources/user.png'
-import menuImage from '../../public/resources/menu.png'
 
+// Here is Navigation Bar part to use React with Typescript
 const Navbar: React.FC = () => {
-  // Separate state variables for clarity
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Main 'User' dropdown
-  const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false); // Hamburger menu
-  const [isHamburgerUserDropdownOpen, setIsHamburgerUserDropdownOpen] = useState(false); // 'User' dropdown in hamburger menu
+  
+  // State for dropdown and hamburger menu
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // User dropdown state
+  const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false); // Hamburger menu state
+  const [isHamburgerUserDropdownOpen, setIsHamburgerUserDropdownOpen] = useState(false); // User dropdown in hamburger menu
 
-  // Toggle functions
+  // Toggle user dropdown
   const handleUserClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  // Close all dropdowns and hamburger menu
   const closeDropdown = () => {
     setIsDropdownOpen(false);
     setIsHamburgerMenuOpen(false);
     setIsHamburgerUserDropdownOpen(false);
   };
 
+  // Toggle hamburger menu
   const handleHamburgerMenuClick = () => {
     setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
-    // Close other dropdowns
     setIsDropdownOpen(false);
     setIsHamburgerUserDropdownOpen(false);
   };
 
+  // Toggle user dropdown inside hamburger menu
   const handleHamburgerUserClick = () => {
     setIsHamburgerUserDropdownOpen(!isHamburgerUserDropdownOpen);
   };
@@ -36,18 +44,18 @@ const Navbar: React.FC = () => {
   return (
     <nav>
       <ul className="navBar">
-        {/* 왼쪽 섹션 */}
+        {/* Left Section (Home link) */}
         <li className="navLeft">
           <Link to="/home" onClick={closeDropdown}>
             <img 
-              src={homeImage} 
+              src={'../../public/resources/homeicon.png'} 
               alt="Home Icon" 
               style={{ width: '30px', height: '30px', cursor: 'pointer' }}
             />
           </Link>
         </li>
 
-        {/* 가운데 섹션 */}
+        {/* Middle Section (Links to other pages) */}
         <div className="navCenter">
           <li>
             <Link to="/facilityList" onClick={closeDropdown}>Facility List</Link>
@@ -55,8 +63,9 @@ const Navbar: React.FC = () => {
           <li>
             <Link to="/facilityReservation" onClick={closeDropdown}>Reservation</Link>
           </li>
-          <li id = 'navUser' >
+          <li id='navUser'>
             <a onClick={handleUserClick}>User ▼</a>
+            {/* User dropdown menu */}
             {isDropdownOpen && (
               <ul className="dropdownContent">
                 <li>
@@ -65,22 +74,22 @@ const Navbar: React.FC = () => {
                 <li>
                   <Link to="/myReservation" onClick={closeDropdown}>My Reservation</Link>
                 </li>
-              </ul>    
+              </ul>
             )}
           </li>
         </div>
 
-        {/* 오른쪽 섹션 */}
+        {/* Right Section (User and Hamburger icons) */}
         <li className="navRight">
           <img 
-            src={userImage} 
+            src={'../../public/resources/user.png'} 
             alt="User Icon"
             id='userIcon' 
             onClick={closeDropdown}
             style={{ width: '40px', height: '40px', cursor: 'pointer' }}
           />
           <img 
-            src={menuImage} 
+            src={'../../public/resources/menu.png'} 
             alt="menu Icon"
             id='menuIcon'
             onClick={handleHamburgerMenuClick}
@@ -89,22 +98,23 @@ const Navbar: React.FC = () => {
         </li>
       </ul>
 
+      {/* Hamburger menu content */}
       {isHamburgerMenuOpen && (
-      <ul className='hiddenNav'>
-        <Link to="/facilityList" onClick={closeDropdown}> <li>Facilidty List</li></Link>
-        <Link to="/facilityReservation" onClick={closeDropdown}><li>Facility Reservation</li></Link>
-        <li onClick={handleHamburgerUserClick}>User ▼</li>
-        {isHamburgerUserDropdownOpen && (
-        <ul className="hiddendropdownContent">
-          <Link to="/myInformation" onClick={closeDropdown}><li>My Information</li></Link>
-          <Link to="/myReservation" onClick={closeDropdown}><li>My Reservation</li></Link>
-        </ul>    
-      )}
-      </ul>
+        <ul className='hiddenNav'>
+          <Link to="/facilityList" onClick={closeDropdown}><li>Facility List</li></Link>
+          <Link to="/facilityReservation" onClick={closeDropdown}><li>Facility Reservation</li></Link>
+          <li onClick={handleHamburgerUserClick}>User ▼</li>
+          {/* User dropdown inside hamburger menu */}
+          {isHamburgerUserDropdownOpen && (
+            <ul className="hiddendropdownContent">
+              <Link to="/myInformation" onClick={closeDropdown}><li>My Information</li></Link>
+              <Link to="/myReservation" onClick={closeDropdown}><li>My Reservation</li></Link>
+            </ul>
+          )}
+        </ul>
       )}
     </nav>
   );
 };
-
 
 export default Navbar;

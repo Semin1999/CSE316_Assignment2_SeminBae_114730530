@@ -1,7 +1,14 @@
+/* Name: Semin Bae (114730530) */
+/* E-mail: semin.bae@stonybrook.edu */
+
+/* Here is the Styling for Home-page */
+
+/* Basic font styling */
 *{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+/* styling the outerul (outerul is the header part) */
 .outerul{
     margin-left: 5%;
     margin-right: 5%;
@@ -14,6 +21,7 @@
     font-weight: 500;
 }
 
+/* styling the innerul (innerul is inside the list part, not header) */
 .innerul{
     list-style-type: circle;
 }

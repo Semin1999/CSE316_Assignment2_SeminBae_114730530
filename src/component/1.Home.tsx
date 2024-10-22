@@ -1,7 +1,13 @@
+/*
+  Name: Semin Bae (114730530)
+  E-mail: semin.bae@stonybrook.edu
+*/
 import React from 'react';
+// Import CSS for styling
 import './sytle/1.Home.css'
 
 const Home: React.FC = () => {
+  // Those are simple hard code to write down the information about this home page. Simple html structure in tsx (assign class name, use h1, etc...)
   return (
   <div>
     <ul className='outerul'>

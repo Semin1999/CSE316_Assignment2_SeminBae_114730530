@@ -1,7 +1,14 @@
+/*
+  Name: Semin Bae (114730530)
+  E-mail: semin.bae@stonybrook.edu
+*/
 import React from 'react';
+// use CSS styling
 import './sytle/2.FacilityList.css'
+// use bootstrap library to better show the Facility list
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Initalize structure for Facility
 interface Facility {
   name: string;
   desc: string;
@@ -11,6 +18,7 @@ interface Facility {
   available: string;
 }
 
+// Initalize the Facility List with given information (It will use on another tsx, so export)
 export const facilityData: Facility[] = [
   {
     name: 'Gym',
@@ -62,15 +70,21 @@ export const facilityData: Facility[] = [
   },
 ];
 
+// FacilityList component to display a list of facility cards
 const FacilityList: React.FC = () => {
-
+  // Render the facility list using Bootstrap for layout and CSS for styling
   return (
+    // Use Bootstrap's container class for a well-structured layout
     <div className="container mt-4">
       <div className="row">
+        {/* Loop through each facility in facilityData array using map */}
         {facilityData.map((facility, index) => {
+          // Create a dynamic path to the image based on facility name
           const imagePath = `../resources/${facility.name.toLowerCase().replace(' ', '')}.jpg`;
+          // Return a Bootstrap card for each facility
           return (
             <div key={index} className="col-md-6">
+              {/* Display Each facility card's information and its styling (use with bootstrap) */}
               <div className="card mb-6">
                 <img
                   src={imagePath}

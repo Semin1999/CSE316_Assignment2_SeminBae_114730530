@@ -1,12 +1,20 @@
+/* Name: Semin Bae (114730530) */
+/* E-mail: semin.bae@stonybrook.edu */
+
+/* Here is the Styling for FacilityReservation */
+
+/* Basic font styling */
 *{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+/* the facility image styling */
 .top-image{
     max-width: 60%;
     min-height: 200px;
 }
 
+/* give little margin on left side to list */
 .list-unstyled{
     margin-left: 1%;
 }
