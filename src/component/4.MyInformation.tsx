@@ -39,7 +39,7 @@ const UserProfile: React.FC = () => {
         </Button>
       </div>
       <br></br>
-      <p className="text-center">Email: abc@stonybrook.edu</p>
+      <p className="text-center">Email: semin.bae@stonybrook.edu</p>
 
       <div className="text-center">
         <p>Password: ******</p>
